@@ -3,15 +3,15 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 # CryProcessor
-CryProcessor is a high-troughtput tool for the Cry toxins mining from the fasta-files or directly from the illumina reads.
+CryProcessor is a high-troughtput tool for the Cry toxins mining from the fasta-files or directly from the Illumina reads.
 
 ## About CryProcessor
 
-CryProcessor is a python-written tool for searching and extracting Cry toxins from illumina sequence data or from the protein fasta files. It includes several parts: an hmm-based scanning for potential Cry toxins, obtaining information about the domains, extracting Cry toxins  with 3 domains only and comparing found toxins with Bt nomenclature. <br> <br> The mode for performing the toxins search directly from the illumina reads implies building an assembly graph (using <i>SPAdes</i>) and the subsequent mining toxins directly from the obtained assebmly graph. 
+CryProcessor is a python-written tool for searching and extracting Cry toxins from Illumina sequence data or from the protein fasta files. It includes several parts: an hmm-based scanning for potential Cry toxins, obtaining information about the domains, extracting Cry toxins  with 3 domains only and comparing found toxins with Bt nomenclature. <br> <br> The mode for performing the toxins search directly from the illumina reads implies building an assembly graph (using <i>SPAdes</i>) and the subsequent mining toxins directly from the obtained assebmly graph. 
 
 ## CryProcessor Pipeline
 
-The following text stands for the full pipeline description (for the illumina reads). To start, <i>SPAdes</i> (http://cab.spbu.ru/software/spades/) or <i>metaSPAdes</i> (http://cab.spbu.ru/software/meta-spades/) are implemented to get the assembly graph from the fastq-files. After that, the potential Cry toxins (with at least 30% identity to the hmm-consensus) are extracted from the assembly paths via <i>PathRacer</i> (http://cab.spbu.ru/software/pathracer/). Then <i>hmmsearch</i> (http://hmmer.org/) is used to find Cry toxin domains in the obtained sequences. In the next step, the results of <i>hmmsearch</i> are combined to get the toxins that posses all three domains. <br> <br>The coordinates of the domains are used to cut flanking sequences and save the domains with the corresponding linkers. The full sequences (without processing procedure) are used to compare the obtained toxins with the Bt nomenclature database via <i>diamond blastp</i> (https://github.com/bbuchfink/diamond). The non-identical sequences are extracted and marked as the potentially new toxins. <br><br>For all the found sequences (both identical to presented in Bt nomenclature and the novel sequences) an online ipg-annotation (Identical Protein Group) is performed (to see the annotation output read the annotation output section below). Finally, nucleotide sequences, corresponding to the protein sequences of the found toxins, are downloaded. Metadata will be uploaded only if the accession numbers are present in the query.
+The following text stands for the full pipeline description (for the Illumina reads). To start, <i>SPAdes</i> (http://cab.spbu.ru/software/spades/) or <i>metaSPAdes</i> (http://cab.spbu.ru/software/meta-spades/) are implemented to get the assembly graph from the fastq-files. After that, the potential Cry toxins (with at least 30% identity to the hmm-consensus) are extracted from the assembly paths via <i>PathRacer</i> (http://cab.spbu.ru/software/pathracer/). Then <i>hmmsearch</i> (http://hmmer.org/) is used to find Cry toxin domains in the obtained sequences. In the next step, the results of <i>hmmsearch</i> are combined to get the toxins that posses all three domains. <br> <br>The coordinates of the domains are used to cut flanking sequences and save the domains with the corresponding linkers. The full sequences (without processing procedure) are used to compare the obtained toxins with the Bt nomenclature database via <i>diamond blastp</i> (https://github.com/bbuchfink/diamond). The non-identical sequences are extracted and marked as the potentially new toxins. <br><br>For all the found sequences (both identical to presented in Bt nomenclature and the novel sequences) an online ipg-annotation (Identical Protein Group) is performed (to see the annotation output read the annotation output section below). Finally, nucleotide sequences, corresponding to the protein sequences of the found toxins, are downloaded. Metadata will be uploaded only if the accession numbers are present in the query.
 
 ## Installation and Usage
 ### Prerequisites
@@ -50,7 +50,7 @@ This command will automatically search for the Cry toxins in the fasta file with
 <ul>
   <li>fasta files with protein sequences; </li>
   <li>gfa files (representing genome assebly graph);</li>
-  <li>forward and reverse illumina reads.</li>
+  <li>forward and reverse Illumina reads.</li>
 </ul>
 
 ### Tool Options: 
@@ -66,8 +66,8 @@ The full list of tool options:
 -a (--annotate) perform the data anotation with ipg (only if the accession numbers are present)
 -nu <fn or pn or an> upload the nucleotide sequences: fn - the full sequences, pn - the processed sequences, an - the both variants
 -pa (--pathracer) - launching PathRacer on the gfa file
--fo <input_1.fastq> - forward illumina reads
--re <input_2.fastq> - reverse illumina reads
+-fo <input_1.fastq> - forward Illumina reads
+-re <input_2.fastq> - reverse Illumina reads
 -n (--meta) - the flag for specifying the metagenomic mode forSPAdes
 -k <number> - the K-mer size for PathRacer (default 21)
 -s (--silent) - disable the console output
